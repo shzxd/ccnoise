@@ -1,15 +1,16 @@
-base_lr: 0.0001
-display: 1000
-test_iter: 300
-test_interval: 10000
-max_iter: 100000
-lr_policy: "fixed"
-gamma: 0.1
-momentum: 0.9
-weight_decay: 0.0005
-stepsize: 10000
-snapshot: 100000
+base_lr: 0.0001 # 基础学习率#
+display: 1000 # 每训练1000次打印信息
+test_iter: 300  # 与test layer中的bach_size结合起来，batch_size * test_iter = epoch
+test_interval: 10000  # 测试间隔
+max_iter: 100000  # 最大迭代次数
+lr_policy: "fixed"  # 学习策略，"fixed":保持base_lr不变
+gamma: 0.1  # 学习率调整因子
+momentum: 0.9 # 上一次梯度更新的权重
+weight_decay: 0.0005  #权重衰减，防止过拟合
+stepsize: 10000 #学习率更新步长
+snapshot: 100000  # 快照保存阈值
 snapshot_prefix: "train/demo"
 solver_mode: GPU
-net: "train/train_val.prototxt"
-solver_type: SGD
+net: "train/train_val.prototxt" # 设置所使用的网络模型
+solver_type: SGD # 优化算法Stochastic Gradient Descent
+# 既然学习策略lr_policy为fixed，那么gamma、stepsize还有什么用？
