@@ -10,7 +10,7 @@ weight_decay: 0.0005  #权重衰减，防止过拟合
 stepsize: 10000 #学习率更新步长
 snapshot: 100000  # 快照保存阈值
 snapshot_prefix: "train/demo"
-solver_mode: GPU
+solver_mode: CPU # 更改为CPU模式   
 net: "train/train_val.prototxt" # 设置所使用的网络模型
 solver_type: SGD # 优化算法Stochastic Gradient Descent
 # 既然学习策略lr_policy为fixed，那么gamma、stepsize还有什么用？
