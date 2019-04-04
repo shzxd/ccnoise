@@ -11,10 +11,10 @@ import lmdb
 
 statlist = np.array(['data/stats.mat'])
 
-ti_env = lmdb.open('data/train_input', map_size=1024000000000)
-tl_env = lmdb.open('data/train_label', map_size=1024000000000)
-vi_env = lmdb.open('data/val_input', map_size=1024000000000)
-vl_env = lmdb.open('data/val_label', map_size=1024000000000)
+ti_env = lmdb.open('data/train_input', map_size=1024000000000)  # 训练输入
+tl_env = lmdb.open('data/train_label', map_size=1024000000000)  # 训练标签
+vi_env = lmdb.open('data/val_input', map_size=1024000000000)    # 验证输入
+vl_env = lmdb.open('data/val_label', map_size=1024000000000)    # 验证标签
 
 tcount = 0
 vcount = 0
@@ -43,7 +43,7 @@ for dset in xrange(statlist.shape[0]):
     gray = rgb2hsv(sp)[:, :, 2]
     edge = feature.canny(gray, sigma=3)
 
-    # Dilation
+    # Dilation膨胀
     edge = dilation(edge, square(3))
     edge = edge & ~sp_mask
 
