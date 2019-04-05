@@ -1,16 +1,19 @@
 layer {
-  name: "train_input"
-  type: "Data"
+  name: "train_input"   # 层名，自定义
+  type: "Data"  # 层类型，Data型直接从数据库中加载数据
+  # 数据流以Blobs的形式通过caffe,top与bottom表示数据流的输出与输入
+  # bottoms -> "learning" -> tops
   top: "input"
   include {
-    phase: TRAIN
+    phase: TRAIN    # 标明该层用于训练阶段
   }
   data_param {
-    source: "data/train_input"
-    batch_size: 64
-    backend: LMDB
+    source: "data/train_input"  # 数据库路径
+    batch_size: 64  # 批处理以提高效率
+    backend: LMDB   # 数据库类型
   }
   transform_param {
+    # 特征缩放因子，归一化？，1/255，[0,255]->[0,1]
     scale: 0.0039215686274509803921568627451
   }
 }
@@ -58,28 +61,28 @@ layer {
 }
 layer {
   name: "ip1"
-  type: "InnerProduct"
+  type: "InnerProduct"  # 全连接层
   bottom: "input"
   top: "ip1"
   param {
-    lr_mult: 1
+    lr_mult: 1  # 权重的learning rate multipliers乘子
   }
   param {
-    lr_mult: 0.1
+    lr_mult: 0.1    #偏置bias的learning rate multipliers
   }
   inner_product_param {
-    num_output: 200
-    weight_filler {
+    num_output: 200 # 滤波器数量
+    weight_filler { # 权值预填充
       type: "gaussian"
       std: 0.01
     }
-    bias_filler {
+    bias_filler {   # 偏置预填充
       type: "constant"
       value: 0
     }
   }
 }
-layer {
+layer { # 激活/神经元层
   name: "tanh1"
   type: "TanH"
   bottom: "ip1"
@@ -108,7 +111,7 @@ layer {
     }
   }
 }
-layer {
+layer { # 损失层
   name: "loss"
   type: "EuclideanLoss"
   bottom: "ip2"

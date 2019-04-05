@@ -32,7 +32,7 @@ for dset in range(statlist.shape[0]):   # for python3
     sp_mask = np.zeros([img_mean.shape[0] // 8, img_mean.shape[1] // 8], dtype='bool')
 
     print ('Generating dataset...')
-    
+
     # Superpixel 8*8
     for i in range(0, img_mean.shape[0], 8):
         for j in range(0, img_mean.shape[1], 8):
@@ -79,8 +79,8 @@ for dset in range(statlist.shape[0]):   # for python3
             color = img_mean[r, c, :].reshape(3)
             d_input = caffe.io.array_to_datum(np.concatenate((color, patch)).reshape((195, 1, 1)))
             d_label = caffe.io.array_to_datum(img_cov[r, c, :].reshape((6, 1, 1)))
-            vi_txn.put('{:08}'.format(vcount), d_input.SerializeToString())
-            vl_txn.put('{:08}'.format(vcount), d_label.SerializeToString())
+            vi_txn.put('{:08}'.format(vcount).encode(), d_input.SerializeToString())
+            vl_txn.put('{:08}'.format(vcount).encode(), d_label.SerializeToString())
             vcount = vcount + 1
 
     print ('Done.')
