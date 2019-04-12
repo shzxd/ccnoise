@@ -1,5 +1,5 @@
 function covar = make_cov(prefix, start_idx, end_idx, postfix, img_mean)
-img_mean = img_mean * 255;  %？
+img_mean = img_mean * 255;  % 去归一化，im2double将像素值归一到[0,1]
 covar = zeros(size(img_mean, 1), size(img_mean, 2), 6);
 for i = start_idx:end_idx
     img = double(imread(strcat(prefix, sprintf('%06d', i), postfix)));
