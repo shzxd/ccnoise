@@ -23,7 +23,10 @@ def estimate_ccnoise(net_model, net_weights, img):
             out = net.forward()
             out = out['ip2']
             nl[i:i+8, j:j+8, :] = np.transpose(np.reshape(out, [6, 8, 8], order='F'), [2, 1, 0])
+    return nl
 
 
 caffe.set_mode_cpu()
 nl = estimate_ccnoise(net_model, net_weights, img)
+# print(net.blobs['input'].data)
+print(nl)
