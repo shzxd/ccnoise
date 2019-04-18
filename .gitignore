@@ -1,0 +1,9 @@
+*.mat
+*.caffemodel
+*.swp
+*.solverstate
+data/train_input/
+data/train_label/
+data/val_input/
+data/val_label/
+
