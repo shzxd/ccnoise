@@ -1,0 +1,11 @@
+function covar = my_make_cov(img_dir, img_mean)
+img_mean = img_mean * 255;  % 去归�?��，im2double将像素�?归一到[0,1]
+covar = zeros(size(img_mean, 1), size(img_mean, 2), 6);
+    img = double(imread(img_dir));
+    covar(:, :, 1) = covar(:, :, 1) + (img(:, :, 1) - img_mean(:, :, 1)).^2; % 自协方差
+    covar(:, :, 2) = covar(:, :, 2) + (img(:, :, 2) - img_mean(:, :, 2)).^2;
+    covar(:, :, 3) = covar(:, :, 3) + (img(:, :, 3) - img_mean(:, :, 3)).^2;
+    covar(:, :, 4) = covar(:, :, 4) + (img(:, :, 1) - img_mean(:, :, 1)) .* (img(:, :, 2) - img_mean(:, :, 2)); % 互协方差
+    covar(:, :, 5) = covar(:, :, 5) + (img(:, :, 1) - img_mean(:, :, 1)) .* (img(:, :, 3) - img_mean(:, :, 3));
+    covar(:, :, 6) = covar(:, :, 6) + (img(:, :, 2) - img_mean(:, :, 2)) .* (img(:, :, 3) - img_mean(:, :, 3));
+covar = covar ./ (1);
