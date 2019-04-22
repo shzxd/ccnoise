@@ -1,5 +1,5 @@
 function covar = my_make_cov(img_dir, img_mean)
-img_mean = img_mean * 255;  % 去归�?��，im2double将像素�?归一到[0,1]
+img_mean = img_mean * 255;  % 去归一化
 covar = zeros(size(img_mean, 1), size(img_mean, 2), 6);
     img = double(imread(img_dir));
     covar(:, :, 1) = covar(:, :, 1) + (img(:, :, 1) - img_mean(:, :, 1)).^2; % 自协方差
