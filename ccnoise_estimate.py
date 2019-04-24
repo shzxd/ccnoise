@@ -3,12 +3,13 @@ import sys
 import caffe
 import numpy as np
 from scipy.io import loadmat
+from scipy.io import savemat
 
 net_model = 'train/deploy.prototxt' # sys.argv[1]
 net_weights = 'train/demo_iter_100000.caffemodel' # sys.argv[2]
 phase = 'test'
-img_dict = loadmat('data/img.mat')
-img = img_dict['img'].astype('float')
+img_dict = loadmat('data/testP123.mat')
+img = img_dict['testP123'].astype('float')
 
 
 def estimate_ccnoise(net_model, net_weights, img):
@@ -29,4 +30,5 @@ def estimate_ccnoise(net_model, net_weights, img):
 caffe.set_mode_cpu()
 nl = estimate_ccnoise(net_model, net_weights, img)
 # print(net.blobs['input'].data)
-print(nl)
+savemat('./data/precov.mat', mdict={'img_cov':nl})
+print(nl, "\nDone")

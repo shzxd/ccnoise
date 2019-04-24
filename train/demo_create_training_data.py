@@ -9,7 +9,11 @@ from skimage.morphology import dilation, square
 import caffe
 import lmdb
 
-statlist = np.array(['data/stats.mat'])
+imgs = 20
+statlist = np.array([])
+for dataorder in range(imgs):
+    datapath = 'data/MATLAB_data/stats' + str(dataorder + 1) + '.mat'
+    statlist = np.append(statlist, datapath)
 
 ti_env = lmdb.open('data/train_input', map_size=1024000000000)  # 训练输入
 tl_env = lmdb.open('data/train_label', map_size=1024000000000)  # 训练标签
@@ -20,7 +24,7 @@ tcount = 0
 vcount = 0
 
 for dset in range(statlist.shape[0]):   # for python3
-    print ('Loading mat data...'.format(dset))  # for python3
+    print ('Loading mat data...' + format(dset))  # for python3
 
     stats = loadmat(statlist[dset])
     img_cov = stats['img_cov'].astype('float')
@@ -31,7 +35,7 @@ for dset in range(statlist.shape[0]):   # for python3
     sp = np.zeros([img_mean.shape[0] // 8, img_mean.shape[1] // 8, img_mean.shape[2]])  # 整除
     sp_mask = np.zeros([img_mean.shape[0] // 8, img_mean.shape[1] // 8], dtype='bool')
 
-    print ('Generating dataset...')
+    print('Generating dataset...')
 
     # Superpixel 8*8
     for i in range(0, img_mean.shape[0], 8):
@@ -56,8 +60,8 @@ for dset in range(statlist.shape[0]):   # for python3
     perms = np.random.permutation(idx[0].shape[0])
     split = np.floor(idx[0].shape[0] * 0.98).astype('int')
 
-    print ('{0} samples were generated (98%: training set, 2%: validation set).'.format(idx[0].shape[0]))
-    print ('Saving...')
+    print('{0} samples were generated (98%: training set, 2%: validation set).'.format(idx[0].shape[0]))
+    print('Saving...')
 
     with ti_env.begin(write=True) as ti_txn, tl_env.begin(write=True) as tl_txn:
         for i in range(split):
@@ -83,7 +87,7 @@ for dset in range(statlist.shape[0]):   # for python3
             vl_txn.put('{:08}'.format(vcount).encode(), d_label.SerializeToString())
             vcount = vcount + 1
 
-    print ('Done.')
+    print('Done.')
 
 ti_env.close()
 tl_env.close()
