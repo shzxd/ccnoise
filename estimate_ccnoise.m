@@ -9,8 +9,10 @@ nl = zeros(size(img, 1), size(img, 2), 6);
 
 for i = 1:8:size(img, 1)
     for j = 1:8:size(img, 2)
-        patch = permute(img(i:i+8-1, j:j+8-1, :), [3, 2, 1]);
-        data = [reshape(patch, [3, 64]); repmat(reshape(patch, [192, 1]), 1, 64)];
+        % permute调整矩阵维度
+        patch = permute(img(i:i+8-1, j:j+8-1, :), [3, 2, 1]); % patch 3*8*8
+        data = [reshape(patch, [3, 64]); repmat(reshape(patch, [192, 1]), 1, 64)]; % repmat在行维度重复1次,列维度重复64次
+        % blob[width, height, channels, num]
         out = net.forward({reshape(data, [1, 1, 195, 64])});
         out = out{1};
         nl(i:i+8-1, j:j+8-1, :) = permute(reshape(out, [6, 8, 8]), [3, 2, 1]);
