@@ -12,7 +12,7 @@ import lmdb
 imgs = 20
 statlist = np.array([])
 for dataorder in range(imgs):
-    datapath = 'data/MATLAB_data/stats' + str(dataorder + 1) + '.mat'
+    datapath = 'data/pre_is_mean/stats' + str(dataorder + 1) + '.mat'
     statlist = np.append(statlist, datapath)
 
 ti_env = lmdb.open('data/train_input', map_size=1024000000000)  # 训练输入
@@ -24,7 +24,7 @@ tcount = 0
 vcount = 0
 
 for dset in range(statlist.shape[0]):   # for python3
-    print ('Loading mat data...' + format(dset))  # for python3
+    print ('Loading mat data...' + format(dset) + '/' + format(imgs))  # for python3
 
     stats = loadmat(statlist[dset])
     img_cov = stats['img_cov'].astype('float')

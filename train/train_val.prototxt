@@ -8,7 +8,7 @@ layer {
     phase: TRAIN    # 标明该层用于训练阶段
   }
   data_param {
-    source: "data/train_input"  # 数据库路径
+    source: "data/train_input/"  # 数据库路径
     batch_size: 64  # 批处理以提高效率
     backend: LMDB   # 数据库类型
   }
@@ -25,7 +25,7 @@ layer {
     phase: TRAIN
   }
   data_param {
-    source: "data/train_label"
+    source: "data/train_label/"
     batch_size: 64
     backend: LMDB
   }
@@ -38,7 +38,7 @@ layer {
     phase: TEST
   }
   data_param {
-    source: "data/val_input"
+    source: "data/val_input/"
     batch_size: 64
     backend: LMDB
   }
@@ -54,7 +54,7 @@ layer {
     phase: TEST
   }
   data_param {
-    source: "data/val_label"
+    source: "data/val_label/"
     batch_size: 64
     backend: LMDB
   }
